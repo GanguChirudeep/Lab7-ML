@@ -137,6 +137,36 @@ print(f"Accuracy: {accuracy * 100:.2f}%")
 
 
 # In[ ]:
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Assuming 'data' is your DataFrame or dictionary
+X = df[['embed_0', 'embed_1']]
+y = df['Label']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# List of kernel functions to experiment with
+kernel_functions = ['linear', 'poly', 'rbf', 'sigmoid']
+
+# Iterate through different kernel functions
+for kernel in kernel_functions:
+    # Initialize the SVC classifier with the specified kernel
+    clf = SVC(kernel=kernel)
+
+    # Train the classifier on the training data
+    clf.fit(X_train, y_train)
+
+    # Use the trained classifier to make predictions on the test set
+    predictions = clf.predict(X_test)
+
+    # Calculate accuracy
+    accuracy = accuracy_score(y_test, predictions)
+
+    # Display the results for each kernel function
+    print(f"Kernel: {kernel}, Accuracy: {accuracy}")
 
 
 
